@@ -9,7 +9,7 @@ public class User
     public const int MinUsernameLength = 3;
     public const int MaxUsernameLength = 100;
     
-    public int Id { get; set; }
+    public int Id { get; private set; }
     public string Username { get; private set; } = null!;
     public string PasswordHash { get; private set; } = null!;
     public string Email { get; private set; } = null!;
