@@ -24,25 +24,9 @@ public static partial class ValidationItems
             ValidationSeverity = ValidationSeverity.Error
         };
 
-        public static readonly ValidationItem MinPasswordLength = new()
-        {
-            Code = $"{CodePrefix}3",
-            Message = $"Password must be at least {Entities.User.User.MinPasswordLength} character long.",
-            ValidationType = ValidationType.FormalValidation,
-            ValidationSeverity = ValidationSeverity.Error
-        };
-        
-        public static readonly ValidationItem MaxPasswordLength = new()
-        {
-            Code = $"{CodePrefix}4",
-            Message = $"Password can contain at most {Entities.User.User.MaxPasswordLength} characters.",
-            ValidationType = ValidationType.FormalValidation,
-            ValidationSeverity = ValidationSeverity.Error
-        };
-
         public static readonly ValidationItem EmailRequired = new()
         {
-            Code = $"{CodePrefix}5",
+            Code = $"{CodePrefix}3",
             Message = $"Email is required.",
             ValidationType = ValidationType.FormalValidation,
             ValidationSeverity = ValidationSeverity.Error
@@ -50,9 +34,17 @@ public static partial class ValidationItems
 
         public static readonly ValidationItem EmailUnique = new()
         {
-            Code = $"{CodePrefix}6",
+            Code = $"{CodePrefix}4",
             Message = $"Email already exists.",
             ValidationType = ValidationType.BusinessRule,
+            ValidationSeverity = ValidationSeverity.Error
+        };
+        
+        public static readonly ValidationItem PasswordHashEmpty = new()
+        {
+            Code = $"{CodePrefix}5",
+            Message = $"Password hash is empty. Password hash should not be empty.",
+            ValidationType = ValidationType.FormalValidation,
             ValidationSeverity = ValidationSeverity.Error
         };
     }
