@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyTask.Domain", "AcademyTask.Domain\AcademyTask.Domain.csproj", "{782014FB-50FC-4CFA-A447-08C42E266287}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyTask.Infrastructure", "AcademyTask.Infrastructure\AcademyTask.Infrastructure.csproj", "{3303005F-8ACA-4EA2-A708-AF8C797E3633}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{782014FB-50FC-4CFA-A447-08C42E266287}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{782014FB-50FC-4CFA-A447-08C42E266287}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{782014FB-50FC-4CFA-A447-08C42E266287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3303005F-8ACA-4EA2-A708-AF8C797E3633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3303005F-8ACA-4EA2-A708-AF8C797E3633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3303005F-8ACA-4EA2-A708-AF8C797E3633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3303005F-8ACA-4EA2-A708-AF8C797E3633}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
