@@ -7,8 +7,16 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
+        DotNetEnv.Env.Load();
+        string? connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+        
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException("Please set the environment variable DATABASE_URL");
+            
+        
+        
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=AcademyTask;Username=postgres;Password=postgres;");
+        optionsBuilder.UseNpgsql(connectionString);
         
         return new AppDbContext(optionsBuilder.Options);
     }

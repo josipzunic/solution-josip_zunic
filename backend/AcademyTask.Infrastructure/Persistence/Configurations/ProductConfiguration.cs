@@ -16,6 +16,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(x => x.Description).HasMaxLength(Product.MaxDescriptionLength).IsRequired(false);
         builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(x => x.ImageUrl).IsRequired(false);
+        builder.Property(x => x.Category).IsRequired();
         builder.Property(x => x.CreatedAt).IsRequired();
         builder.Property(x => x.UpdatedAt).IsRequired();
 

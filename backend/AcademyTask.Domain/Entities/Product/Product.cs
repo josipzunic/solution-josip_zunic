@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using AcademyTask.Domain.Common.Model;
 using AcademyTask.Domain.Validation;
 using AcademyTask.Domain.Validation.ValidationItems;
@@ -15,12 +16,13 @@ public class Product
     public string? Description { get; private set; }
     public string? ImageUrl { get; private set; }
     public decimal Price { get; private set; }
+    public string Category { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     
     private Product() {}
 
-    public static Result<Product> Create(string name, string? description, string? imageUrl, decimal price)
+    public static Result<Product> Create(string name, string? description, string? imageUrl, decimal price, string category)
     {
         var validationResult = new ValidationResult();
         
@@ -42,6 +44,7 @@ public class Product
             Description = description,
             ImageUrl = imageUrl,
             Price = price,
+            Category = category,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
