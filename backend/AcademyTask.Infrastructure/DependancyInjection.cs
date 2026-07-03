@@ -27,6 +27,7 @@ public static class DependancyInjection
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IExternalProductApiClient, ExternalProductApiClient>();
+        services.AddScoped<IProductService, ProductService>();
         
         return services;
     }

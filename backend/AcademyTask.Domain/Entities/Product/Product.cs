@@ -17,12 +17,19 @@ public class Product
     public string? ImageUrl { get; private set; }
     public decimal Price { get; private set; }
     public string Category { get; private set; } = null!;
+    public int ExternalId { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
     
     private Product() {}
 
-    public static Result<Product> Create(string name, string? description, string? imageUrl, decimal price, string category)
+    public static Result<Product> Create(
+        string name, 
+        string? description, 
+        string? imageUrl, 
+        decimal price, 
+        string category, 
+        int externalId)
     {
         var validationResult = new ValidationResult();
         
