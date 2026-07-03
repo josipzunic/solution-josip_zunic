@@ -1,3 +1,4 @@
+using AcademyTask.Application.Interfaces;
 using AcademyTask.Application.Services;
 using AcademyTask.Domain.Interfaces;
 using AcademyTask.Domain.Interfaces.Common;
@@ -22,7 +23,7 @@ public static class DependancyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
-        services.AddScoped<UserService>();
+        services.AddScoped<IUserService, UserService>();
         
         return services;
     }

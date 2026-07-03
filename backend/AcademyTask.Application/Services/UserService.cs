@@ -1,3 +1,4 @@
+using AcademyTask.Application.Interfaces;
 using AcademyTask.Domain.Common.Model;
 using AcademyTask.Domain.Entities.User;
 using AcademyTask.Domain.Interfaces;
@@ -7,18 +8,18 @@ using AcademyTask.Domain.Validation.ValidationItems;
 
 namespace AcademyTask.Application.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
-    private List<char> _specialSymbols = 
+    private readonly List<char> _specialSymbols = 
     [
         '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
         '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\',
         ':', ';', '"', '\'', '<', '>', ',', '.', '?', '/'
     ];
         
-    private List<char> _digits = 
+    private readonly List<char> _digits = 
     [
         '0','1','2','3','4','5','6','7','8','9'
     ];
