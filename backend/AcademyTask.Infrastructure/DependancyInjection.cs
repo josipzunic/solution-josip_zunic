@@ -26,7 +26,7 @@ public static class DependancyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IExternalProductApiClient, ExternalProductApiClient>();
+        services.AddHttpClient<IExternalProductApiClient, ExternalProductApiClient>();
         services.AddScoped<IProductService, ProductService>();
         
         return services;

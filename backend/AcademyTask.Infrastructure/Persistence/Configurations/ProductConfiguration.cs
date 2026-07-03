@@ -13,7 +13,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
         builder.Property(x => x.Name).IsRequired().HasMaxLength(Product.MaxNameLength);
-        builder.Property(x => x.Description).HasMaxLength(Product.MaxDescriptionLength).IsRequired(false);
+        builder.Property(x => x.Description).IsRequired(false);
         builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)");
         builder.Property(x => x.ImageUrl).IsRequired(false);
         builder.Property(x => x.Category).IsRequired();

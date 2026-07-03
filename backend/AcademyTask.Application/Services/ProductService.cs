@@ -29,6 +29,10 @@ public class ProductService : IProductService
         
         var externalProducts = resultExternal.Value;
         var productsResults = new List<Product>();
+        
+        var incomingIds = externalProducts.Select(x => x.Id).ToList();
+        var productsInDb = await _productRepository.GetAllAsync();
+        var idsInDb = productsInDb.Select(x => x.ExternalId).ToList();
 
         foreach (var externalProduct in externalProducts)
         {
@@ -43,14 +47,22 @@ public class ProductService : IProductService
                 externalProduct.Category,
                 externalProduct.Id);
 
-            if (!result.ValidationResult.HasErrors && result.Value != null)
+            
+
+            if (!result.ValidationResult.HasErrors && result.Value != null )
             {
-                await _productRepository.AddAsync(result.Value);
-                productsResults.Add(result.Value);
+                if (!productsResults.Any(p=> p.Id == externalProduct.Id) 
+                    && !idsInDb.Contains(externalProduct.Id))
+                {
+                    await _productRepository.AddAsync(result.Value);
+                    productsResults.Add(result.Value);   
+                }
             }
         }
 
         await _productRepository.SaveAsync();
         return productsResults;
     }
+    
+    
 }

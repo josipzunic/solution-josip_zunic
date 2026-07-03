@@ -14,17 +14,14 @@ public class ExternalProductApiClient : IExternalProductApiClient
     
     public ExternalProductApiClient(HttpClient httpClient)
     {
-        DotNetEnv.Env.Load();
+        DotNetEnv.Env.TraversePath().Load();
         _httpClient = httpClient;
         _api =  Environment.GetEnvironmentVariable("EXTERNAL_API");
     }
 
     public async Task<Domain.Common.Model.Result<List<ExternalProductDto>>> GetProductsAsync()
     {
-        DotNetEnv.Env.Load();
-        string? api = Environment.GetEnvironmentVariable("EXTERNAL_API");
-        
-        if(api == null)
+        if(_api == null)
             throw new InvalidOperationException("Please set the environment variable EXTERNAL_API");
 
         var response = await _httpClient.GetAsync(_api);
@@ -32,16 +29,17 @@ public class ExternalProductApiClient : IExternalProductApiClient
 
         var validationResult = new ValidationResult();
         var content = await response.Content.ReadAsStringAsync();
-        var externalProducts =
-            JsonSerializer.Deserialize<List<ExternalProductDto>>(content, new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            });
-        if (externalProducts == null)
+        var wrapper = JsonSerializer.Deserialize<ExternalProductListResponseDto>(content, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        if (wrapper == null || wrapper.Products == null)
         {
             validationResult.AddValidationItems(ValidationItems.Product.NullExternalProducts);
-            return new Domain.Common.Model.Result<List<ExternalProductDto>>(null,  validationResult);
+            return new Domain.Common.Model.Result<List<ExternalProductDto>>(null, validationResult);
         }
-        return new Domain.Common.Model.Result<List<ExternalProductDto>>(externalProducts, validationResult);
+
+        return new Domain.Common.Model.Result<List<ExternalProductDto>>(wrapper.Products, validationResult);
     }
 }

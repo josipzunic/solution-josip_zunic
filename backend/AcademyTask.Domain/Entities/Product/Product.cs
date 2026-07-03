@@ -33,8 +33,6 @@ public class Product
     {
         var validationResult = new ValidationResult();
         
-        if(!string.IsNullOrWhiteSpace(description) && description.Length > MaxDescriptionLength)
-            validationResult.AddValidationItems(ValidationItems.Product.MaxDescriptionLength);
         if(price <= 0)
             validationResult.AddValidationItems(ValidationItems.Product.NegativeOrZeroPrice);
         if (string.IsNullOrWhiteSpace(name)|| name.Length < MinNameLength)
@@ -52,6 +50,7 @@ public class Product
             ImageUrl = imageUrl,
             Price = price,
             Category = category,
+            ExternalId = externalId,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
