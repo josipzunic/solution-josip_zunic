@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AcademyTask.Infrastructure.Security;
 
-public class IdentityPasswordHasher : IPasswordHasher
+public class PasswordHasher : IPasswordHasher
 {
     private readonly PasswordHasher<User> _hasher = new();
 

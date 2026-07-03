@@ -11,6 +11,17 @@ public class UserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
+    private List<char> _specialSymbols = 
+    [
+        '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+        '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\',
+        ':', ';', '"', '\'', '<', '>', ',', '.', '?', '/'
+    ];
+        
+    private List<char> _digits = 
+    [
+        '0','1','2','3','4','5','6','7','8','9'
+    ];
     
     public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
     {
@@ -24,18 +35,6 @@ public class UserService
         var userByUsername = await _userRepository.FindByUsernameAsync(username);
         var validationResult = new ValidationResult();
         
-        List<char> specialSymbols = 
-        [
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
-            '-', '_', '+', '=', '{', '}', '[', ']', '|', '\\',
-            ':', ';', '"', '\'', '<', '>', ',', '.', '?', '/'
-        ];
-        
-        List<char> digits = 
-        [
-            '0','1','2','3','4','5','6','7','8','9'
-        ];
-        
         if(userByUsername != null)
             validationResult.AddValidationItems(ValidationItems.User.UsernameUnique);
         if(userByEmail != null)
@@ -44,9 +43,9 @@ public class UserService
             validationResult.AddValidationItems(ValidationItems.User.MinPasswordLength);
         else if(password.Length > User.MaxPasswordLength)
             validationResult.AddValidationItems(ValidationItems.User.MaxPasswordLength);
-        if(!password.Any(s => specialSymbols.Contains(s)))
+        if(!password.Any(s => _specialSymbols.Contains(s)))
             validationResult.AddValidationItems(ValidationItems.User.PasswordSpecialCharacter);
-        if(password.Any(s => digits.Contains(s)))
+        if(!password.Any(s => _digits.Contains(s)))
             validationResult.AddValidationItems(ValidationItems.User.PasswordDigit);
         
 

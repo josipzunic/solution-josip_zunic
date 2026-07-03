@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AcademyTask.Application\AcademyTask.Application.csproj" />
       <ProjectReference Include="..\AcademyTask.Domain\AcademyTask.Domain.csproj" />
     </ItemGroup>
 
