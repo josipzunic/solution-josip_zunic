@@ -2,6 +2,8 @@ using AcademyTask.Application.Interfaces;
 using AcademyTask.Application.Services;
 using AcademyTask.Domain.Interfaces;
 using AcademyTask.Domain.Interfaces.Common;
+using AcademyTask.Domain.Interfaces.ExternalApi;
+using AcademyTask.Infrastructure.ExternalApiFetch;
 using AcademyTask.Infrastructure.Persistence;
 using AcademyTask.Infrastructure.Persistence.Repositories.Product;
 using AcademyTask.Infrastructure.Persistence.Repositories.User;
@@ -24,6 +26,7 @@ public static class DependancyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IExternalProductApiClient, ExternalProductApiClient>();
         
         return services;
     }

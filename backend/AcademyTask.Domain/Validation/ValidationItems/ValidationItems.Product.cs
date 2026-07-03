@@ -43,5 +43,14 @@ public static partial class ValidationItems
             ValidationSeverity = ValidationSeverity.Error,
             ValidationType = ValidationType.FormalValidation
         };
+
+        public static readonly ValidationItem NullExternalProducts = new()
+        {
+            Code = $"{CodePrefix}5",
+            Message =
+                $"External Api did not retrieve any products",
+            ValidationSeverity = ValidationSeverity.Error,
+            ValidationType = ValidationType.SystemError
+        };
     }
 }
