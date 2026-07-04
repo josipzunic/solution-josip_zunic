@@ -17,6 +17,7 @@ public class User
     public string Email { get; private set; } = null!;
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
+    public ICollection<LikedProduct.LikedProduct> LikedProducts { get; private set; } = [];
 
     private User() {}
     public static Result<User> Create(string username, string passwordHash, string email)

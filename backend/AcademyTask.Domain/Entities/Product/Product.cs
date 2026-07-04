@@ -20,6 +20,7 @@ public class Product
     public int ExternalId { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
+    public ICollection<LikedProduct.LikedProduct> LikedByUsers { get; private set; } = [];
     
     private Product() {}
 
