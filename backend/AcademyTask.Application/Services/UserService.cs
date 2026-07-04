@@ -13,6 +13,7 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly List<char> _specialSymbols = 
     [
         '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
@@ -25,10 +26,11 @@ public class UserService : IUserService
         '0','1','2','3','4','5','6','7','8','9'
     ];
     
-    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher,  IJwtTokenGenerator jwtTokenGenerator)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
+        _jwtTokenGenerator = jwtTokenGenerator;
     }
 
     public async Task<Result<User>> RegisterAsync(string username, string password, string email)
@@ -67,7 +69,7 @@ public class UserService : IUserService
         return result;
     }
 
-    public async Task<Result<User>> LoginAsync(string username, string password)
+    public async Task<Result<string>> LoginAsync(string username, string password)
     {
         var user = await _userRepository.FindByUsernameAsync(username);
         var validationResult = new ValidationResult();
@@ -76,7 +78,7 @@ public class UserService : IUserService
             validationResult.AddValidationItems(ValidationItems.User.InvalidCredentials);
 
         if (validationResult.HasErrors)
-            return new Result<User>(null, validationResult);
+            return new Result<string>(null, validationResult);
 
         var validLogin = _passwordHasher.Verify(password, user!.PasswordHash);
         
@@ -84,8 +86,10 @@ public class UserService : IUserService
             validationResult.AddValidationItems(ValidationItems.User.InvalidCredentials);
         
         if (validationResult.HasErrors)
-            return new Result<User>(null, validationResult);
+            return new Result<string>(null, validationResult);
+
+        var token = _jwtTokenGenerator.GenerateToken(user);
         
-        return new Result<User>(user, validationResult);
+        return new Result<string>(token, validationResult);
     }
 }

@@ -1,4 +1,5 @@
 using AcademyTask.Application.DTO;
+using AcademyTask.Application.Interfaces;
 using AcademyTask.Application.Services;
 using AcademyTask.Domain.Common.Model;
 using AcademyTask.Domain.Entities.User;
@@ -10,9 +11,9 @@ namespace AcademyTask.API.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly UserService  _userService;
+    private readonly IUserService  _userService;
     
-    public UsersController(UserService userService) =>  _userService = userService;
+    public UsersController(IUserService userService) =>  _userService = userService;
 
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody] RegisterRequestDto request)
@@ -42,16 +43,9 @@ public class UsersController : ControllerBase
         if (result.ValidationResult.HasErrors)
             return BadRequest(result.ValidationResult.ValidationItems);
 
-        var user = result.Value!;
-
-        var loggedInUser = new UserResponseDto()
-        {
-            Email = user.Email,
-            Id = user.Id,
-            Username = user.Username
-        };
+        var token = result.Value!;
         
-        return Ok(loggedInUser);
+        return Ok(new { token });
     }
     
     

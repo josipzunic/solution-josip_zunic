@@ -7,7 +7,6 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        DotNetEnv.Env.TraversePath().Load();
         string? connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
         
         if (string.IsNullOrWhiteSpace(connectionString))

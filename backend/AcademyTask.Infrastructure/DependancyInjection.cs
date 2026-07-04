@@ -28,6 +28,7 @@ public static class DependancyInjection
         services.AddScoped<IUserService, UserService>();
         services.AddHttpClient<IExternalProductApiClient, ExternalProductApiClient>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         
         return services;
     }

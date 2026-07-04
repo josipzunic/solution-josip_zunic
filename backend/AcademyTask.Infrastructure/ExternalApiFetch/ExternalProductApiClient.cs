@@ -14,7 +14,6 @@ public class ExternalProductApiClient : IExternalProductApiClient
     
     public ExternalProductApiClient(HttpClient httpClient)
     {
-        DotNetEnv.Env.TraversePath().Load();
         _httpClient = httpClient;
         _api =  Environment.GetEnvironmentVariable("EXTERNAL_API");
     }
