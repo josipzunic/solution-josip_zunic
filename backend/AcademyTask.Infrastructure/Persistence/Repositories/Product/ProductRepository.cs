@@ -11,7 +11,7 @@ public class ProductRepository : Repository<Domain.Entities.Product.Product, int
 
     public async Task<List<Domain.Entities.Product.Product>> FindByNameAsync(string name)
     {
-        return await  DbSet.Where(product => product.Name == name).ToListAsync();
+        return await  DbSet.Where(product => product.Name.ToLower().Contains(name)).ToListAsync();
     }
 
     public async Task<List<Domain.Entities.Product.Product>> FilterByCategoryAndPriceAsync(List<string> categories, 

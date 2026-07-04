@@ -18,7 +18,7 @@ public class ProductService : IProductService
         _externalProductApiClient = externalProductApiClient;
     }
     
-    public async Task<List<Product>> FetchProductsAsync()
+    public async Task<List<Product>> FetchProductsExternalAsync()
     {
         var resultExternal = await _externalProductApiClient.GetProductsAsync();
         
@@ -63,6 +63,28 @@ public class ProductService : IProductService
         await _productRepository.SaveAsync();
         return productsResults;
     }
-    
-    
+
+    public async Task<List<Product>> GetAllProductsAsync()
+    {
+        var result = await _productRepository.GetAllAsync();
+        return result;
+    }
+
+    public async Task<List<Product>> GetProductsByNameAsync(string name)
+    {
+        var result =  await _productRepository.FindByNameAsync(name);
+        return result;
+    }
+
+    public async Task<List<Product>> GetProductsByCategoryAndPriceAsync(List<string> category, decimal upperBound, decimal lowerBound)
+    {
+        var result = await _productRepository.FilterByCategoryAndPriceAsync(category, upperBound, lowerBound);
+        return result;
+    }
+
+    public async Task<Product?> GetProductByIdAsync(int productId)
+    {
+        var result = await _productRepository.GetByIdAsync(productId);
+        return result;
+    }
 }
