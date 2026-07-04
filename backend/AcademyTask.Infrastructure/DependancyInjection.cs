@@ -3,8 +3,10 @@ using AcademyTask.Application.Services;
 using AcademyTask.Domain.Interfaces;
 using AcademyTask.Domain.Interfaces.Common;
 using AcademyTask.Domain.Interfaces.ExternalApi;
+using AcademyTask.Domain.Interfaces.LikedProduct;
 using AcademyTask.Infrastructure.ExternalApiFetch;
 using AcademyTask.Infrastructure.Persistence;
+using AcademyTask.Infrastructure.Persistence.Repositories.LikedProduct;
 using AcademyTask.Infrastructure.Persistence.Repositories.Product;
 using AcademyTask.Infrastructure.Persistence.Repositories.User;
 using AcademyTask.Infrastructure.Security;
@@ -29,6 +31,8 @@ public static class DependancyInjection
         services.AddHttpClient<IExternalProductApiClient, ExternalProductApiClient>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddScoped<ILikedProductService, LikedProductService>();
+        services.AddScoped<ILikedProductRepository, LikedProductRepository>();
         
         return services;
     }

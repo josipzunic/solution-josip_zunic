@@ -1,6 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AcademyTask.Application.DTO;
 using AcademyTask.Application.Interfaces;
 using AcademyTask.Domain.Entities.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademyTask.API.Controllers;
@@ -10,8 +13,13 @@ namespace AcademyTask.API.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _productService;
+    private readonly ILikedProductService _likedProductService;
     
-    public ProductsController(IProductService productService) =>  _productService = productService;
+    public ProductsController(IProductService productService,  ILikedProductService likedProductService)
+    {
+        _productService = productService;
+        _likedProductService = likedProductService;
+    }
 
     [HttpPost("postProducts")]
     public async Task<ActionResult> FetchProductsExternal()
@@ -61,6 +69,39 @@ public class ProductsController : ControllerBase
         var productDtoList = result.Select(product => ToDto(product)).ToList();
         
         return Ok(productDtoList);
+    }
+    
+    [Authorize]
+    [HttpGet("liked/{id}")]
+    public async Task<ActionResult> LoadLikedProducts([FromRoute] int userId)
+    {
+        var result = await _likedProductService.LoadLikedProductsAsync(userId);
+        var productDtoList = result.Select(product => ToDto(product)).ToList();
+        return  Ok(productDtoList);
+    }
+
+    [Authorize]
+    [HttpPost("favorite/{productId}")]
+    public async Task<ActionResult> CreateLikedProduct(int productId)
+    {
+        foreach (var claim in User.Claims)
+        {
+            Console.WriteLine($"{claim.Type} = {claim.Value}");
+        }
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var result = await _likedProductService.CreateLikedProductAsync(userId, productId);
+        
+        if (result.ValidationResult.HasErrors)
+            return BadRequest(result.ValidationResult.ValidationItems);
+
+        var likedProduct = new LikedProductResponse()
+        {
+            ProductId = result.Value!.ProductId,
+            UserId = result.Value.UserId,
+            ProductName = result.Value.Product.Name
+        };
+        
+        return Ok(likedProduct);
     }
 
     private static ProductResponseDto ToDto(Product product)

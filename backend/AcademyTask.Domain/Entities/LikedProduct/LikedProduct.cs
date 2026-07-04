@@ -27,4 +27,6 @@ public class LikedProduct
 
         return new Result<LikedProduct>(likedProduct, new ValidationResult());
     }
+    
+    public void SetProduct(Product.Product product) => Product = product;
 }
