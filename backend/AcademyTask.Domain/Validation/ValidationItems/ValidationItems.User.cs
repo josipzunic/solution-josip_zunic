@@ -95,5 +95,13 @@ public static partial class ValidationItems
             ValidationType = ValidationType.FormalValidation,
             ValidationSeverity = ValidationSeverity.Error
         };
+        
+        public static readonly ValidationItem InvalidEmailFormat = new()
+        {
+            Code = $"{CodePrefix}12",
+            Message = $"Bad email format. Please enter a valid email address. example test@test.com",
+            ValidationType = ValidationType.FormalValidation,
+            ValidationSeverity = ValidationSeverity.Error
+        };
     }
 }

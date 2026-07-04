@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using AcademyTask.Domain.Common.Model;
 using AcademyTask.Domain.Validation;
 using AcademyTask.Domain.Validation.ValidationItems;
@@ -30,8 +31,11 @@ public class User
             validationResult.AddValidationItems(ValidationItems.User.MaxUsernameLength);
         if (string.IsNullOrWhiteSpace(email))
             validationResult.AddValidationItems(ValidationItems.User.EmailRequired);
+        else if(!IsValidEmail(email))
+            validationResult.AddValidationItems(ValidationItems.User.InvalidEmailFormat);
         if (string.IsNullOrWhiteSpace(passwordHash))
             validationResult.AddValidationItems((ValidationItems.User.PasswordHashEmpty));
+        
 
         if (validationResult.HasErrors)
             return new Result<User>(null, validationResult);
@@ -50,5 +54,18 @@ public class User
     private void SetPassword(string passwordHash)
     {
         PasswordHash = passwordHash;
+    }
+    
+    private static bool IsValidEmail(string email)
+    {
+        try
+        {
+            var addr = new MailAddress(email);
+            return addr.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

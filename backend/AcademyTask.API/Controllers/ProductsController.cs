@@ -72,7 +72,7 @@ public class ProductsController : ControllerBase
     }
     
     [Authorize]
-    [HttpGet("liked/{id}")]
+    [HttpGet("favorite/{id}")]
     public async Task<ActionResult> LoadLikedProducts([FromRoute] int userId)
     {
         var result = await _likedProductService.LoadLikedProductsAsync(userId);
@@ -84,10 +84,6 @@ public class ProductsController : ControllerBase
     [HttpPost("favorite/{productId}")]
     public async Task<ActionResult> CreateLikedProduct(int productId)
     {
-        foreach (var claim in User.Claims)
-        {
-            Console.WriteLine($"{claim.Type} = {claim.Value}");
-        }
         var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var result = await _likedProductService.CreateLikedProductAsync(userId, productId);
         
@@ -102,6 +98,19 @@ public class ProductsController : ControllerBase
         };
         
         return Ok(likedProduct);
+    }
+
+    [Authorize]
+    [HttpDelete("favorite/{productId}")]
+    public async Task<ActionResult> DeleteLikedProduct(int productId)
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var result = await _likedProductService.DeleteLikedProductAsync(userId, productId);
+        
+        if (result.ValidationResult.HasErrors)
+            return BadRequest(result.ValidationResult.ValidationItems);
+        
+        return NoContent();
     }
 
     private static ProductResponseDto ToDto(Product product)

@@ -50,4 +50,21 @@ public class LikedProductService : ILikedProductService
 
         return likedProduct;
     }
+
+    public async Task<Result<LikedProduct>> DeleteLikedProductAsync(int userId, int productId)
+    {
+        var likedProduct = await _likedProductRepository.GetLikedProductAsync(userId, productId);
+        var validationResult = new ValidationResult();
+        
+        if(likedProduct == null)
+            validationResult.AddValidationItems(ValidationItems.LikedProduct.NonExistingEntity);
+
+        if (validationResult.HasErrors)
+            return new Result<LikedProduct>(null, validationResult);
+
+        await _likedProductRepository.DeleteAsync(likedProduct!);
+        await _likedProductRepository.SaveAsync();
+        
+        return new Result<LikedProduct>(likedProduct,  validationResult);
+    }
 }

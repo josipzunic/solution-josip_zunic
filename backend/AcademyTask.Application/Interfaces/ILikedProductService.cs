@@ -8,4 +8,5 @@ public interface ILikedProductService
 {
     Task<List<Product>> LoadLikedProductsAsync(int userId);
     Task<Result<LikedProduct>> CreateLikedProductAsync(int userId, int productId);
+    Task<Result<LikedProduct>> DeleteLikedProductAsync(int userId, int productId);
 }

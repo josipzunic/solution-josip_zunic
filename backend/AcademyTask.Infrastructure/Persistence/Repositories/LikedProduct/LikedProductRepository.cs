@@ -16,4 +16,13 @@ public class LikedProductRepository : Repository<Domain.Entities.LikedProduct.Li
 
         return products;
     }
+
+    public async Task<Domain.Entities.LikedProduct.LikedProduct?> GetLikedProductAsync(int userId, int productId)
+    {
+        var likedProduct = await DbSet.Where(likedProduct =>
+            likedProduct.UserId == userId && likedProduct.ProductId == productId).FirstOrDefaultAsync();
+
+        return likedProduct;
+    }
+    
 }
