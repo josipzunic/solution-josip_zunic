@@ -33,18 +33,35 @@ builder.Services
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
       };
     });
-builder.Services.AddCors(options => {
-  options.AddPolicy("AllowFrontend", policy => {
-    policy.WithOrigins("http://localhost:5173")
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-  });
-});
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+  options.AddDocumentTransformer((document, context, cancellationToken) =>
+  {
+    document.Components ??= new();
+    document.Components.SecuritySchemes.Add("Bearer", new()
+    {
+      Type = SecuritySchemeType.Http,
+      Scheme = "bearer",
+      BearerFormat = "JWT",
+      In = ParameterLocation.Header,
+      Description = "Enter your JWT token"
+    });
+
+    document.SecurityRequirements.Add(new()
+    {
+      [new OpenApiSecurityScheme
+      {
+        Reference = new OpenApiReference { Id = "Bearer", Type = ReferenceType.SecurityScheme }
+      }] = Array.Empty<string>()
+    });
+
+    return Task.CompletedTask;
+  });
+});
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
@@ -58,7 +75,6 @@ if (app.Environment.IsDevelopment()) {
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors("AllowFrontend");
 
 app.MapControllers();
 app.Run();

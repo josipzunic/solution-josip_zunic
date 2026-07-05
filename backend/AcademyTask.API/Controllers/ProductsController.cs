@@ -72,12 +72,13 @@ public class ProductsController : ControllerBase
     }
     
     [Authorize]
-    [HttpGet("favorite/{id}")]
-    public async Task<ActionResult> LoadLikedProducts([FromRoute] int userId)
+    [HttpGet("favorite")]
+    public async Task<ActionResult> LoadLikedProducts()
     {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var result = await _likedProductService.LoadLikedProductsAsync(userId);
         var productDtoList = result.Select(product => ToDto(product)).ToList();
-        return  Ok(productDtoList);
+        return Ok(productDtoList);
     }
 
     [Authorize]
