@@ -17,9 +17,7 @@ export const Layout = ({ children }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div
-      className={`${styles.wrapper} ${isHome ? styles.wrapperHome : ""} ${lightMode ? styles.wrapperHomeLight : styles.wrapperHomeDark}`}
-    >
+    <>
       <header
         className={`${styles.header} ${lightMode ? styles.headerLight : styles.headerDark} ${isHome ? styles.headerTransparent : ""}`}
       >
@@ -43,7 +41,7 @@ export const Layout = ({ children }: Props) => {
             onChange={() => setMenuOpen(!menuOpen)}
           />
           <div
-            className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""}`}
+            className={`${styles.navLinks} ${menuOpen ? styles.navLinksOpen : ""} ${lightMode ? styles.navLinksLight : styles.navLinksDark}`}
           >
             <NavLink
               className={styles.link}
@@ -82,6 +80,6 @@ export const Layout = ({ children }: Props) => {
       >
         {children}
       </main>
-    </div>
+    </>
   );
 };
