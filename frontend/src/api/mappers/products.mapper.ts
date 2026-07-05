@@ -7,6 +7,7 @@ export const productMapper = (dto: ProductDto): Product => {
     description: dto.description ?? "",
     price: dto.price,
     name: dto.name,
+    id: dto.id
   };
 
   return product;

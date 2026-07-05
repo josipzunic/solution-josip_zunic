@@ -18,4 +18,9 @@
 
 .name {
     width: 15rem;
+    color: black;
+}
+
+.price {
+    color: black;
 }

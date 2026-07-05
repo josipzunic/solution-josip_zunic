@@ -3,6 +3,7 @@ export type Product = {
   name: string;
   price: number;
   description: string;
+  id: number;
 };
 
 export type ProductDto = {
@@ -10,4 +11,5 @@ export type ProductDto = {
   description: string | null;
   name: string;
   price: number;
+  id: number;
 };
