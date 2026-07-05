@@ -37,8 +37,9 @@ export const Home = () => {
         <Link
           className={styles.link}
           to={routes.productDetails.replace(":id", product.id.toString())}
+          key={product.id}
         >
-          <ProductCard product={product} key={product.id} />
+          <ProductCard product={product} />
         </Link>
       ))}
     </section>

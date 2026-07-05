@@ -69,7 +69,7 @@ export const Layout = ({ children }: Props) => {
         </nav>
       </header>
       <main
-        className={`${styles.main} ${isHome ? (lightMode ? styles.mainLight : styles.mainDark) : ""}`}
+        className={`${styles.main} ${!isHome ? (lightMode ? styles.mainLight : styles.mainDark) : ""}`}
       >
         {children}
       </main>

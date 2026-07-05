@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import styles from "./Filters.module.css";
+import { useCategories } from "../../hooks/useCategories";
 
 type Props = {
   onSearch: (searchTerm: string) => void;
@@ -17,6 +18,9 @@ export const Filters = ({ onSearch }: Props) => {
   const [priceRange, setPriceRange] = useState<[number, number]>([100, 800]);
   const [status, setStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { categories } = useCategories();
+
 
   const handleMinChange = (value: string) => {
     setPriceRange((prev) => [Number(value), prev[1]]);
@@ -60,9 +64,10 @@ export const Filters = ({ onSearch }: Props) => {
           lightMode ? styles.inputLight : styles.inputDark
         }`}
       >
-        <option value="all">No filter</option>
-        <option value="false">Failed missions</option>
-        <option value="true">Successful missions</option>
+        <option value="">No filter</option>
+        {categories.map((category: string) => (
+          <option key={category} value={category}>{category}</option>
+        ))}
       </select>
 
       <div className={styles.priceWrapper}>
