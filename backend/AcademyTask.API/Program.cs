@@ -1,5 +1,8 @@
 using System.Text;
+using AcademyTask.Domain.Entities.User;
+using AcademyTask.Domain.Interfaces.Common;
 using AcademyTask.Infrastructure;
+using AcademyTask.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -71,6 +74,24 @@ if (app.Environment.IsDevelopment()) {
   app.UseSwaggerUI(options => {
     options.SwaggerEndpoint("/openapi/v1.json", "AcademyTask API v1");
   });
+}
+
+using (var scope = app.Services.CreateScope())
+{
+  var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+  var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+
+  if (!context.Users.Any())
+  {
+    var passwordHash = passwordHasher.Hash("TestPassword123!");
+    var result = User.Create("testuser", passwordHash, "testuser@test.com");
+
+    if (!result.ValidationResult.HasErrors)
+    {
+      context.Users.Add(result.Value!);
+      context.SaveChanges();
+    }
+  }
 }
 
 app.UseAuthentication();

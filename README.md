@@ -50,7 +50,8 @@ dotnet ef database update
 dotnet run
 ```
 6. Open the `localhost:<xxxx>/swagger` link to track all of the endpoins in Swagger UI. To test the protected `/favorite` endpoints, register a user, log in to
-   receive a JWT, then click "Authorize" in Swagger UI and paste the token. Before testing, populate the database by calling the postProducts endpoint
+   receive a JWT, then click "Authorize" in Swagger UI and paste the token. Before testing, populate the database by calling the postProducts endpoint. Upon program start
+    a user with `username = testuser` and `password = TestPassword123!` should be generated.
 7. To run the provided tests, change working directory to `AcademyTask.Test` and run the command
 ```
 dotnet test
