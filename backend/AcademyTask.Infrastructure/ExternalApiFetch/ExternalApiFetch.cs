@@ -7,12 +7,12 @@ using Superpower.Model;
 
 namespace AcademyTask.Infrastructure.ExternalApiFetch;
 
-public class ExternalProductApiClient : IExternalProductApiClient
+public class ExternalApiFetch : IProductSource
 {
     private readonly HttpClient _httpClient;
     private readonly string? _api;
     
-    public ExternalProductApiClient(HttpClient httpClient)
+    public ExternalApiFetch(HttpClient httpClient)
     {
         _httpClient = httpClient;
         _api =  Environment.GetEnvironmentVariable("EXTERNAL_API");

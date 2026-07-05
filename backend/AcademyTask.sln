@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyTask.API", "AcademyT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyTask.Application", "AcademyTask.Application\AcademyTask.Application.csproj", "{899DF2DB-8573-4ACD-9FEC-8965C90F2832}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcademyTask.Test", "AcademyTask.Test\AcademyTask.Test.csproj", "{6F0ECACA-31E4-4C8B-93A5-784E5978B091}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{899DF2DB-8573-4ACD-9FEC-8965C90F2832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{899DF2DB-8573-4ACD-9FEC-8965C90F2832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{899DF2DB-8573-4ACD-9FEC-8965C90F2832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F0ECACA-31E4-4C8B-93A5-784E5978B091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0ECACA-31E4-4C8B-93A5-784E5978B091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0ECACA-31E4-4C8B-93A5-784E5978B091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0ECACA-31E4-4C8B-93A5-784E5978B091}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

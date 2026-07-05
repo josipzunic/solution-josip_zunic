@@ -10,17 +10,17 @@ namespace AcademyTask.Application.Services;
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
-    private readonly IExternalProductApiClient _externalProductApiClient;
+    private readonly IProductSource _productSource;
 
-    public ProductService(IProductRepository productRepository, IExternalProductApiClient externalProductApiClient)
+    public ProductService(IProductRepository productRepository, IProductSource productSource)
     {
         _productRepository = productRepository;
-        _externalProductApiClient = externalProductApiClient;
+        _productSource = productSource;
     }
     
     public async Task<List<Product>> FetchProductsExternalAsync()
     {
-        var resultExternal = await _externalProductApiClient.GetProductsAsync();
+        var resultExternal = await _productSource.GetProductsAsync();
         
         if (resultExternal.ValidationResult.HasErrors || resultExternal.Value == null)
         {

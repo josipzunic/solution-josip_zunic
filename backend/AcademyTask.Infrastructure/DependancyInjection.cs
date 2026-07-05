@@ -28,7 +28,7 @@ public static class DependancyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IUserService, UserService>();
-        services.AddHttpClient<IExternalProductApiClient, ExternalProductApiClient>();
+        services.AddHttpClient<IProductSource, ExternalApiFetch.ExternalApiFetch>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<ILikedProductService, LikedProductService>();

@@ -3,7 +3,7 @@ using AcademyTask.Domain.Dto;
 
 namespace AcademyTask.Domain.Interfaces.ExternalApi;
 
-public interface IExternalProductApiClient
+public interface IProductSource
 {
     Task<Result<List<ExternalProductDto>>> GetProductsAsync();
 }
