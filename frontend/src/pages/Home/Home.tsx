@@ -4,14 +4,17 @@ import { useEffect } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { useProduct } from "../../hooks/useProduct";
-import {Filters} from "../../components/Filters/Filters";
+import { Filters } from "../../components/Filters/Filters";
 
 export const Home = () => {
   useEffect(() => {
     document.title = pageNames.home;
   }, []);
 
-  const { products, loading, error } = useProduct();
+  const { products, loading, error, setSearchTerm } = useProduct();
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   if (loading)
     return (
@@ -20,11 +23,11 @@ export const Home = () => {
       </div>
     );
   if (error) return <div> error </div>;
-  if (!products || products.length === 0) return <div>empty</div>;
+  if (!products) return <div>empty</div>;
 
   return (
     <section className={styles.home}>
-      <Filters />
+      <Filters onSearch={handleSearch} />
       {products.map((product, idx) => (
         <ProductCard product={product} key={idx} />
       ))}

@@ -1,21 +1,30 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import styles from "./Filters.module.css";
 
-export const Filters = () => {
-  const searchRef = useRef<HTMLInputElement>(null);
+type Props = {
+  onSearch: (searchTerm: string) => void;
+  // onApply: (filters: {
+  //   category: string;
+  //   minPrice: number;
+  //   maxPrice: number;
+  // }) => void;
+};
+
+export const Filters = ({ onSearch }: Props) => {
   const { lightMode } = useTheme();
 
   const [priceRange, setPriceRange] = useState<[number, number]>([100, 800]);
   const [status, setStatus] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleMinChange = (value: string) => {
-  setPriceRange((prev) => [Number(value), prev[1]]);
-};
+    setPriceRange((prev) => [Number(value), prev[1]]);
+  };
 
-const handleMaxChange = (value: string) => {
-  setPriceRange((prev) => [prev[0], Number(value)]);
-};
+  const handleMaxChange = (value: string) => {
+    setPriceRange((prev) => [prev[0], Number(value)]);
+  };
 
   const normalizeRange = () => {
     setPriceRange(([min, max]) => {
@@ -24,15 +33,24 @@ const handleMaxChange = (value: string) => {
     });
   };
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, onSearch]);
+
   return (
     <form className={styles.filters} onSubmit={(e) => e.preventDefault()}>
       <input
-        ref={searchRef}
         type="search"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className={`${styles.input} ${
           lightMode ? styles.inputLight : styles.inputDark
         }`}
-        placeholder="Search launches..."
+        placeholder="Search products"
       />
 
       <select
@@ -79,9 +97,12 @@ const handleMaxChange = (value: string) => {
         </div>
       </div>
 
-      <button type="submit" className={`${styles.button} ${
-              lightMode ? styles.buttonLight : styles.buttonDark
-            }`}>
+      <button
+        type="submit"
+        className={`${styles.button} ${
+          lightMode ? styles.buttonLight : styles.buttonDark
+        }`}
+      >
         Apply
       </button>
     </form>
