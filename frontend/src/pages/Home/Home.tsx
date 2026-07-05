@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { useProduct } from "../../hooks/useProduct";
+import {Filters} from "../../components/Filters/Filters";
 
 export const Home = () => {
   useEffect(() => {
@@ -22,7 +23,8 @@ export const Home = () => {
   if (!products || products.length === 0) return <div>empty</div>;
 
   return (
-    <section>
+    <section className={styles.home}>
+      <Filters />
       {products.map((product, idx) => (
         <ProductCard product={product} key={idx} />
       ))}

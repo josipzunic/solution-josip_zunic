@@ -45,13 +45,6 @@ export const Layout = ({ children }: Props) => {
           >
             <NavLink
               className={styles.link}
-              to={routes.home}
-              onClick={() => setMenuOpen(false)}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              className={styles.link}
               to={routes.products}
               onClick={() => setMenuOpen(false)}
             >

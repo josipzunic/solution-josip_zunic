@@ -1,0 +1,21 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+    height: 30rem;
+}
+
+.img {
+    width: 15rem;
+    text-align: center;
+}
+
+.description {
+    width: 15rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.name {
+    width: 15rem;
+}
