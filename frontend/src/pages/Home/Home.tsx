@@ -1,23 +1,31 @@
 import styles from "./Home.module.css";
 import { pageNames } from "../../constants/pageNames";
 import { useEffect } from "react";
-import { useFetch } from "../../hooks/useFetch";
-import { productsUrl } from "../../api/products.api";
-import type { Product } from "../../constants/types";
+import { Loader } from "../../components/Loader/Loader";
+import { ProductCard } from "../../components/ProductCard/ProductCard";
+import { useProduct } from "../../hooks/useProduct";
 
 export const Home = () => {
   useEffect(() => {
     document.title = pageNames.home;
   }, []);
 
-  const response = useFetch<Product[]>(productsUrl());
-  const data = response.data;
+  const { products, loading, error } = useProduct();
 
-  if (response.loading) return <div className={styles.home}>Loading…</div>;
-  if (response.error)
-    return <div className={styles.home}>Error: {response.error}</div>;
-  if (!data || data.length === 0)
-    return <div className={styles.home}>No products found</div>;
+  if (loading)
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  if (error) return <div> error </div>;
+  if (!products || products.length === 0) return <div>empty</div>;
 
-  return <div className={styles.home}>{data[0].name}</div>;
+  return (
+    <section>
+      {products.map((product, idx) => (
+        <ProductCard product={product} key={idx} />
+      ))}
+    </section>
+  );
 };
